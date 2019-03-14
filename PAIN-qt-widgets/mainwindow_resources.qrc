@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/duck-with-glasses.jpeg</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icons/new-512.png</file>
+    </qresource>
+</RCC>
