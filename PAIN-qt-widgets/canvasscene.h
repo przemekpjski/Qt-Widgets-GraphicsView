@@ -1,6 +1,7 @@
 #ifndef CANVASSCENE_H
 #define CANVASSCENE_H
 
+#include "tool.h"
 #include <QGraphicsScene>
 
 class CanvasScene : public QGraphicsScene
@@ -19,16 +20,23 @@ public:
 
 public slots:
     void setState(State state) noexcept { canvasState = state; }
+    void setTool(int type) noexcept { setTool(ToolType(type)); }
+    void setTool(ToolType toolType) noexcept { selectedTool = Tool(toolType); }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 
+    void drawUsingTool(qreal x, qreal y);
+
 private:
     // canvas state machine
-    State canvasState = State::DRAW_PENCIL;        //State::POINTER;
+    State canvasState = State::POINTER;
     bool mouseLeftPressedDown = false;
+
+    Tool selectedTool = ToolType::NO_TOOL;
+    QSize drawSize = QSize(50, 50);
 };
 
 #endif // CANVASSCENE_H

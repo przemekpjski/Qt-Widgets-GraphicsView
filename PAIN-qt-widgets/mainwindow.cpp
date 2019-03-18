@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 //#include <QtDebug>
+#include "mainwindow_utils.h"
+#include "tooltype.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // so: store previous dock area (?) - another class for managing this margin operations?
 
     initGraphicsScene();
+    initDiagramTools();
 }
 
 MainWindow::~MainWindow()
@@ -58,4 +61,44 @@ void MainWindow::initGraphicsScene()
 
     view->setScene(scene);
     //? ui->graphicsView->show();
+}
+
+void MainWindow::initDiagramTools()
+{
+    std::array< std::pair<QString, int>, 4> tools = {
+        std::make_pair("Block", ToolType::BLOCK),
+        {"Group", ToolType::DIAGRAM_BLOCK},
+        {"Arrow", ToolType::ARROW},
+        {"Label", ToolType::LABEL},
+    };
+
+    toolButtonGroup = new QButtonGroup(this);
+    //toolButtonGroup->setExclusive(false);
+    connect(toolButtonGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            scene, static_cast<void (CanvasScene::*)(int)>(&CanvasScene::setTool));
+            //this, SLOT(toolSelected(int))
+
+    QWidget *toolWidget = new QWidget;
+    QGridLayout *toolLayout = new QGridLayout;
+
+    int row = 0, column = 0;
+    for (auto&& tool : tools) {
+        toolLayout->addWidget(mainwindow_utils::createToolButton(
+                                  QIcon(":/icons/icons/new-512.png"), tool.first, *toolButtonGroup, tool.second),
+                              row, column++);
+        if (column == 2) {
+            ++row;
+            column = 0;
+        }
+    }
+
+    toolWidget->setLayout(toolLayout);
+    int pageIndex = ui->toolBox->addItem(toolWidget, tr("Test"));
+    //whatis? ui->toolBox->setItemEnabled(pageIndex, true);
+    ui->toolBox->setCurrentIndex(pageIndex);
+}
+
+void MainWindow::toolSelected(int toolType)
+{
+    qDebug("Tool Selected, type: %d", toolType);
 }

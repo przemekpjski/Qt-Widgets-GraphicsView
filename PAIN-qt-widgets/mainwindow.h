@@ -5,6 +5,7 @@
 
 //#include <QtWidgets>
 #include <QMainWindow>
+#include <QButtonGroup>
 
 class QGraphicsView;
 class QGraphicsScene;
@@ -23,11 +24,17 @@ public:
 
 private:
     void initGraphicsScene();
+    void initDiagramTools();
+
+private slots:
+    void toolSelected(int toolType);
 
 private:
     Ui::MainWindow *ui;
     QGraphicsView *view;
     CanvasScene *scene;
+
+    QButtonGroup *toolButtonGroup;
 };
 
 #endif // MAINWINDOW_H

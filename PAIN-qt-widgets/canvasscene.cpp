@@ -9,6 +9,11 @@ CanvasScene::CanvasScene(QObject *parent)
 {
 }
 
+void CanvasScene::drawUsingTool(qreal x, qreal y)
+{
+    selectedTool.getDiagramElement()->draw(x, y, drawSize, *this);
+}
+
 void CanvasScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
@@ -27,6 +32,8 @@ void CanvasScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     qDebug("Click scene coords: (%d,%d).",
            static_cast<int>(scenePos.x()),
            static_cast<int>(scenePos.y()));
+
+    drawUsingTool(scenePos.x(), scenePos.y());
 
     // relay to the base implementation to propagate the event to an QGraphicsItem if any
     QGraphicsScene::mousePressEvent(mouseEvent);

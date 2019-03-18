@@ -10,6 +10,12 @@
     <height>517</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>PAIN Qt Widgets</string>
   </property>
@@ -131,11 +137,11 @@
    <addaction name="actionItalic"/>
    <addaction name="actionUnderline"/>
   </widget>
-  <widget class="QDockWidget" name="paintToolsDockWidget">
+  <widget class="QDockWidget" name="toolsDockWidget">
    <property name="minimumSize">
     <size>
      <width>203</width>
-     <height>179</height>
+     <height>292</height>
     </size>
    </property>
    <property name="floating">
@@ -145,7 +151,7 @@
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
-    <string>Paint Tools</string>
+    <string>Tools</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -168,7 +174,43 @@
       <number>2</number>
      </property>
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QToolBox" name="toolBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="diagramToolsPage">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>199</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Diagram Tools</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="additionalToolsPage">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>199</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Additional Tools</string>
+        </attribute>
+       </widget>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line">
