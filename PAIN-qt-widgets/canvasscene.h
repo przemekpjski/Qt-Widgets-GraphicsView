@@ -37,6 +37,8 @@ private:
 
     Tool selectedTool = ToolType::NO_TOOL;
     QSize drawSize = QSize(50, 50);
+
+    QGraphicsItem *itemBeingDrawn;
 };
 
 #endif // CANVASSCENE_H

@@ -4,14 +4,25 @@
 #include <QGraphicsItem>
 #include <QMessageBox>
 
+#include "arrowdiagramelement.h"
+
 CanvasScene::CanvasScene(QObject *parent)
     : QGraphicsScene(parent)
 {
+    ArrowDiagramElement *arrow = new ArrowDiagramElement(*this);
+    arrow->draw({1, 1}, {100, 50});
+    arrow->scaleRedraw({300, 300});
 }
 
 void CanvasScene::drawUsingTool(qreal x, qreal y)
 {
-    selectedTool.getDiagramElement()->draw(x, y, drawSize, *this);
+    if (selectedTool.type == ToolType::ARROW)
+    {
+        itemBeingDrawn = new ArrowDiagramElement(*this);
+        dynamic_cast<ArrowDiagramElement*>(itemBeingDrawn)->processMousePress(QPoint(x, y));
+    }
+    else
+        selectedTool.getDiagramElement()->draw(x, y, drawSize, *this);
 }
 
 void CanvasScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -59,9 +70,10 @@ void CanvasScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             addEllipse(QRectF(mousePos.x(), mousePos.y(), 2, 2), Qt::NoPen, Qt::black);
             break;
         default:
-            ;
+            if (itemBeingDrawn && selectedTool.type == ToolType::ARROW)
+                dynamic_cast<ArrowDiagramElement*>(itemBeingDrawn)->processMouseDrag({}, mousePos.toPoint());
         }
     }
 }
 
-
+// TODO cature an input event before dispatching to seperate event hanlders and pass it to a generic event handler of DiagramElement classes

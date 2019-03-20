@@ -22,7 +22,7 @@ struct Tool
         // return the Singleton object representing the ToolType of the calling Tool object
         switch (type) {
         case BLOCK: return std::make_unique<BlockDiagramElement>();
-        case ARROW: return std::make_unique<ArrowDiagramElement>();
+        //case ARROW: return std::make_unique<ArrowDiagramElement>();
         default:
             std::ostringstream info("No such tool exists.", std::ios_base::ate);
             info << " Type: " << type << '.';
