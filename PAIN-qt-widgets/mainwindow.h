@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "canvasscene.h"
+#include "scene.h"
 
 //#include <QtWidgets>
 #include <QMainWindow>
 
 class QGraphicsView;
-class QGraphicsScene;
+class QActionGroup;
 
 namespace Ui {
 class MainWindow;
@@ -27,7 +27,8 @@ private:
 private:
     Ui::MainWindow *ui;
     QGraphicsView *view;
-    CanvasScene *scene;
+    Scene *scene;
+    QActionGroup *toolActionGroup;
 };
 
 #endif // MAINWINDOW_H
